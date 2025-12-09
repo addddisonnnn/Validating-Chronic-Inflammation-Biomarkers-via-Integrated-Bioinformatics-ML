@@ -97,24 +97,52 @@ Li et al. (2025) identified five shared overactive genes in both diseases: **KIF
 ``` text
 Validating-Chronic-Inflammation-Biomarkers-via-Integrated-Bioinformatics-ML-Paper/
 ├── 📂 data/ # All data files
-│ ├── 📂 raw/ # Raw microarray data from GEO (4 datasets)
-│ └── 📂 processed/ # Processed expression matrices & DEG results
+│ ├── 📂 raw/ # Raw microarray data from GEO
+│ │ ├── 📂 GSE13355/ # Psoriasis training: 122 samples
+│ │ ├── 📂 GSE75214/ # CD training: 78 samples (ileal)
+│ │ ├── 📂 GSE14905/ # Psoriasis validation: 54 samples
+│ │ └── 📂 GSE102133/ # CD validation: 77 samples
+│ └── 📂 processed/ # Processed results
+│ ├── GSE13355_normalized_gene_expression.csv
+│ ├── GSE13355_DEGs.csv
+│ ├── GSE75214_normalized_gene_expression.csv
+│ ├── GSE75214_DEGs.csv
+│ ├── GSE14905_normalized_gene_expression.csv
+│ ├── GSE14905_DEGs.csv
+│ ├── GSE102133_normalized_gene_expression.csv
+│ └── GSE102133_DEGs.csv
 │
 ├── 📂 scripts/ # Analysis scripts
-│ ├── 📂 R/ # R analysis pipelines (4 complete scripts)
-│ └── 📂 python/ # Python utilities for metadata creation
+│ ├── 📂 R/ # R analysis pipelines
+│ │ ├── complete_analysis_GSE13355.R # Psoriasis training analysis
+│ │ ├── complete_analysis_GSE75214.R # CD training analysis
+│ │ ├── complete_analysis_GSE14905.R # Psoriasis validation analysis
+│ │ └── complete_analysis_GSE102133.R # CD validation analysis
+│ └── 📂 python/ # Python utilities
+│ ├── create_gse13355_metadata.py # Creates sample metadata
+│ ├── create_gse75214_metadata_fixed.py # Creates sample metadata
+│ ├── create_gse14905_metadata_final.py # Creates sample metadata
+│ └── create_gse102133_metadata.py # Creates sample metadata
 │
 ├── 📂 metadata/ # Sample annotations and group assignments
 │ ├── GSE13355_sample_groups.csv # 58 Psoriasis | 64 Control
 │ ├── GSE75214_sample_groups_fixed.csv # 67 CD | 11 Control (ileal only)
 │ ├── GSE14905_sample_groups.csv # 33 Psoriasis | 21 Control
 │ └── GSE102133_sample_groups.csv # 65 CD | 12 Control
+│ # Each CSV contains:
+│ # - GSM_ID: Unique GEO sample identifier
+│ # - Group: Disease status (Psoriasis/CD/Control/Exclude)
+│ # Created by parsing GEO SOFT files or sample titles
 │
 ├── 📂 results/ # Analysis outputs
-│ └── 📂 plots/ # Visualization files (4 volcano plots)
+│ └── 📂 plots/ # Visualization files
+│ ├── GSE13355_volcano_plot.png # Psoriasis DEG visualization
+│ ├── GSE75214_volcano_plot.png # CD DEG visualization
+│ ├── GSE14905_volcano_plot.png # Psoriasis validation
+│ └── GSE102133_volcano_plot.png # CD validation
 │
 ├── Paper.pdf # Original research paper
-└── README.md # This documentation
+└── README.md # This file
 ```
 
 
@@ -130,13 +158,13 @@ Validating-Chronic-Inflammation-Biomarkers-via-Integrated-Bioinformatics-ML-Pape
 | **GSE102133** | Crohn's Validation | 77 | 65 | 12 | 19,998 | **1,002** | 587 | 415 |
 | **Total** | **All Datasets** | **331** | **223** | **108** | **-** | **6,167** | **3,368** | **2,799** |
 
-### 🔍 **Key Observations:**
+### **Key Observations:**
 1. **Psoriasis shows more DEGs** than Crohn's disease (1,728 vs 1,006 in training sets)
 2. **Validation sets show higher DEG counts**, possibly due to stricter sample selection
 3. **Consistent up/down regulation patterns** across training and validation sets
 4. **Good data quality**: All datasets show clear separation in PCA/volcano plots
 
-### 📈 **Dataset Statistics:**
+### **Dataset Statistics:**
 - **Total samples processed**: 331
 - **Total disease samples**: 223 (67.4%)
 - **Total control samples**: 108 (32.6%)
